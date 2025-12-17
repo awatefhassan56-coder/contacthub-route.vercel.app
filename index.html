@@ -102,17 +102,23 @@
                         <div class="mb-3">
                             <label for="FullName" class="form-label formFont">Full Name *</label>
                             <input type="text" class="form-control" id="FullName" placeholder="Enter Full Name">
-                        </div>
+  <div class="error-msg text-danger small mt-1"></div>
+
+                          </div>
 
                         <div class="mb-3">
                             <label for="PhoneNumber" class="form-label formFont">Phone Number *</label>
                             <input type="number" class="form-control" id="PhoneNumber" placeholder="e.g., 01012345678">
-                        </div>
+  <div class="error-msg text-danger small mt-1"></div>
+
+                          </div>
 
                         <div class="mb-3">
                             <label for="EmailAddress" class="form-label formFont">Email Address</label>
                             <input type="email" class="form-control" id="EmailAddress" placeholder="name@example.com">
-                        </div>
+  <div class="error-msg text-danger small mt-1"></div>
+
+                          </div>
 
                         <div class="mb-3">
                             <label for="Address" class="form-label formFont">Address</label>
@@ -154,12 +160,16 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn bg-light w-40" data-bs-dismiss="modal">Cancel</button>
-                        <button onclick="addContact()" type="button" class="btn bg-main-color3 text-white w-40" id="addCon">
-                            <i class="fa-solid fa-check me-1"></i> Save Contact
-                        </button>
-                        <button onclick="updateContact()" type="button" class="btn bg-main-color3 text-white w-40 d-none" id="updateCon">
-                            <i class="fa-solid fa-check me-1"></i> Save Contact
-                        </button>
+                        <button type="button" class="btn bg-main-color3 text-white w-40" id="addCon"
+    onclick="addContact()">
+    <i class="fa-solid fa-check me-1"></i> Save Contact
+</button>
+
+<button type="button" class="btn bg-main-color3 text-white w-40 d-none" id="updateCon"
+    onclick="updateContact()">
+    <i class="fa-solid fa-check me-1"></i> Save Contact
+</button>
+
                     </div>
 
                 </div>

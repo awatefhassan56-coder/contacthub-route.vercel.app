@@ -19,6 +19,11 @@ var avatarPreview = document.getElementById("avatarPreview");
 var selectedImage = "";
 var updatedIndex = null;
 
+// Divs للرسائل أسفل الحقول
+var nameError = document.querySelector("#FullName + .error-msg");
+var phoneError = document.querySelector("#PhoneNumber + .error-msg");
+var emailError = document.querySelector("#EmailAddress + .error-msg");
+
 /* ============================
    ARRAYS - LOAD FROM LOCALSTORAGE
 ============================ */
@@ -59,6 +64,8 @@ function AddFailed(title, text) {
     Swal.fire({ icon: "error", title: title, text: text });
 }
 
+
+
 function showSuccess(action, name = "") {
     Swal.fire({
         title: "Done!",
@@ -72,39 +79,56 @@ function showSuccess(action, name = "") {
 /* ============================
    VALIDATION
 ============================ */
-function validateContact(contact, index = null) {
-    var phoneRegex = /^[0-9]{7,15}$/; // يسمح فقط بالأرقام 7-15 رقم
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // شكل بريد صحيح
+
+function validateContact(contact, showAlert = true) {
+    var phoneRegex = /^01[0125][0-9]{8}$/;
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // مسح الرسائل
+    nameError.textContent = "";
+    phoneError.textContent = "";
+    emailError.textContent = "";
+
+    var valid = true;
 
     if (!contact.name.trim()) {
-        AddFailed("Missing Name", "Please enter a name for the contact!");
-        return false;
+        nameError.textContent = "Name is required";
+        if (showAlert) AddFailed("Missing Name", "Please enter a name!");
+        valid = false;
     }
+
     if (!contact.phone.trim()) {
-        AddFailed("Missing Phone", "Please enter a phone number!");
-        return false;
+        phoneError.textContent = "Phone number is required";
+        if (showAlert) AddFailed("Missing Phone", "Please enter a phone number!");
+        valid = false;
+    } 
+    else if (!phoneRegex.test(contact.phone.trim())) {
+        phoneError.textContent = "Invalid Egyptian phone number";
+        if (showAlert)
+            AddFailed("Invalid Phone", "Use Egyptian number like 01012345678");
+        valid = false;
     }
-    if (!phoneRegex.test(contact.phone.trim())) {
-        AddFailed("Invalid Phone", "Phone number must be 7-15 digits.");
-        return false;
-    }
+
     if (contact.email && !emailRegex.test(contact.email.trim())) {
-        AddFailed("Invalid Email", "Please enter a valid email address.");
-        return false;
+        emailError.textContent = "Invalid email address";
+        if (showAlert) AddFailed("Invalid Email", "Please enter a valid email");
+        valid = false;
     }
 
-    for (var i = 0; i < ContactList.length; i++) {
-        if (i !== index && ContactList[i].phone === contact.phone) {
-            AddFailed(
-                "Number already exists",
-                "This number is already added for: " + ContactList[i].name
-            );
-            return false;
-        }
-    }
-
-    return true;
+    return valid;
 }
+
+
+
+// Event listeners للفلديشن الحي أثناء الكتابة
+inputName.addEventListener("input", () => validateContact(createContactObject(), false));
+inputphone.addEventListener("input", () => validateContact(createContactObject(), false));
+inputEmail.addEventListener("input", () => validateContact(createContactObject()))
+
+
+
+
+
 
 /* ============================
    CLEAR FORM
