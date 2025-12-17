@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>contacthub-route.vercel.app</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+
+  <body >
+  <!-------------nav section---------------->
+ <header>
+
+    <div id="header">
+
+        <nav class="navbar navbar-expand-md bg-light border-bottom border-2 ">
+            <div class="container">
+
+                <a class="navbar-brand d-flex mt-1" href="#">
+                    <span class="bg-main-color3 mainShadow nav-icon p-4 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-address-book text-white"></i>
+                    </span>
+                    <div class="ms-3">
+                        <h1 class="fs-3 fw-bolder mb-0">Contact<span class="headingspan">Hub</span></h1>
+                        <p class="headingFont">Smart Contact Manager</p>
+                    </div>
+                </a>
+
+               
+
+            </div>
+        </nav>
+
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h3 class="modal-title fs-5 fw-bold" id="staticBackdropLabel">Add New Contact</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div class="modal-body">
+
+                <!-- اختيار الصورة -->
+                <div class="text-center">
+                  <div id="avatarPreview" class="m-auto mb-3">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+
+                  <label for="formFile" class="btn btn-light ">
+                    <i class="fa-solid fa-camera"></i> Change Photo
+                  </label>
+
+              <input class="d-none" type="file" id="formFile" accept="image/*" >
+                </div>
+                          <div class="mb-3">
+  <label for="FullName" class="form-label formFont">Full Name *</label>
+  <input type="text" class="form-control" id="FullName" placeholder="Enter Full Name ">
+</div>
+          <div class="mb-3">
+  <label for="PhoneNumber" class="form-label formFont">Phone Number *</label>
+  <input type="number" class="form-control" id="PhoneNumber" placeholder="e.g., 01012345678">
+</div>
+                <div class="mb-3">
+  <label for="EmailAddress" class="form-label formFont">Email Address
+</label>
+  <input type="email" class="form-control" id="EmailAddress" placeholder="name@example.com">
+</div>
+          <div class="mb-3">
+  <label for="Address" class="form-label formFont">Address
+</label>
+  <input type="text" class="form-control" id="Address" placeholder="Enter address">
+</div>
+<label for="form-select" class="form-label formFont ">Group
+</label>
+<select class="form-select mb-3" aria-label="Default select example" id="form-select">
+  <option selected>Select a group</option>
+  <option value="Family">Family</option>
+  <option value="Friends">Friends</option>
+  <option value="Work">Work</option>
+  <option value="school">school</option>
+    <option value="Other">Other</option>
+
+
+</select>
+<div class="mb-3">
+  <label for="Notes" class="form-label formFont">Notes</label>
+  <textarea class="form-control" id="Notes" rows="3"placeholder="Add notes about this contact"></textarea>
+</div>
+<div class="d-flex gap-4 align-items-center">
+  <!-- Favorite checkbox -->
+  <div class="form-check d-flex align-items-center gap-1">
+    <input class="form-check-input me-2" type="checkbox" value="Favorite" id="favoriteCheck" >
+    <label class="form-check-label d-flex align-items-center formFont" for="favoriteCheck">
+      <i class="fa-solid fa-star text-warning me-2"></i> <!-- أيقونة نجمة -->
+      Favorite
+    </label>
+  </div>
+
+  <!-- Emergency checkbox -->
+  <div class="form-check d-flex align-items-center gap-1">
+    <input class="form-check-input me-2" type="checkbox" value="Emergency" id="emergencyCheck">
+    <label class="form-check-label d-flex align-items-center formFont" for="emergencyCheck">
+      <i class="fa-solid fa-heart-pulse  text-danger me-2"></i> <!-- أيقونة تحذير -->
+      Emergency
+    </label>
+  </div>
+</div>
+
+
+
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn bg-light w-40" data-bs-dismiss="modal">Cancel</button>
+                <button onclick="addContact()" type="button" class="btn bg-main-color3 text-white w-40" id="addCon" ><i class="fa-solid fa-check   me-1"></i>Save Contact</button>
+                <button onclick="updateContact()" type="button" class="btn bg-main-color3 text-white w-40 d-none" id="updateCon"  ><i class="fa-solid fa-check   me-1"></i>Save Contact</button>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- نهاية المودال -->
+
+    </div>
+
+</header>
+
+
+ 
+   <!-------------Contacts count section---------------->
+<section id="ContactsCount">
+  <div class="container">
+    <div class="row">
+      <di class="col-6 col-md-4 count mb-2">
+        <div class="Total totalContacts d-flex  " >
+<div class="countIcon bg-linear1 me-3"><i class="fa-solid fa-people-group"></i></div>
+<div class="countData">
+  <h2 class="mainFont">Total</h2>
+  <p id="Total" class="fw-bold"></p>
+</div>
+        </div>
+      </di>
+       <di class="col-6 col-md-4 count mb-2">
+        <div class="Total totalContacts d-flex  " >
+<div class="countIcon bg-linear2 me-3"><i class="fa-solid fa-star"></i></div>
+<div class="countData">
+  <h2 class="mainFont">Favorites</h2>
+  <p id="Favorites" class="fw-bold"></p>
+</div>
+        </div>
+      </di>
+       <di class="col-6 col-md-4 count">
+        <div class="Total totalContacts d-flex  " >
+<div class="countIcon bg-linear3 me-3"><i class="fa-solid fa-heart-pulse"></i></div>
+<div class="countData">
+  <h2 class="mainFont">Emergency</h2>
+  <p id="Emergency" class="fw-bold"></p>
+</div>
+        </div>
+      </di>
+    </div>
+  </div>
+</section>
+   <!-------------Contacts  section---------------->
+<section id="Contacts">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-8">
+        <h3 class="fw-bold fs-2">All Contacts</h3>
+        <p class="mainFont">Manage and organize your 4 contacts</p>
+        <div class="  position-relative" >
+  <i class="fa fa-search search-icon"></i>
+  <input type="text" placeholder="Search by name, phone, or email..." class="form-control search-input my-2" id="search-input">
+</div>
+<div class="row" id="ContactsData"></div>
+      </div>
+      <div class="col-md-4 ">
+         <div class="position-sticky top-0">
+        <div class="FavoritesData">
+          <div class="Total  Total1 d-flex fevoritTop " >
+<div class="countIcon bg-linear2 me-3"><i class="fa-solid fa-star"></i></div>
+<div class="countData">
+  <h2 class="mainFont mb-0">Favorites</h2>
+  <p  class="headingFont">Quick access to starred contacts</p>
+</div>
+        </div>
+        <div id="FavoritesData"></div>
+        </div>
+        <div class="EmergencyData mt-3">
+          <div class="Total  Total1 d-flex fevoritTop " >
+<div class="countIcon bg-linear3 me-3"><i class="fa-solid fa-heart-pulse"></i></div>
+<div class="countData">
+  <h2 class="mainFont mb-0">Emergency</h2>
+  <p  class="headingFont">Important contacts for urgent calls</p>
+</div>
+        </div>
+        <div id="EmergencyData"></div>
+        </div>
+         
+</div>
+    </div>
+  </div></div>
+</section>
+   <!---------- bootstrap script---------------->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
