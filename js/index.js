@@ -80,28 +80,30 @@ function showSuccess(action, name = "") {
    VALIDATION
 ============================ */
 
-function validateContact(contact, showAlert = true) {
+function validateContact(contact, showAlert = true, index = null) {
     var phoneRegex = /^01[0125][0-9]{8}$/;
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // مسح الرسائل
+    // مسح رسائل الأخطاء
     nameError.textContent = "";
     phoneError.textContent = "";
     emailError.textContent = "";
 
     var valid = true;
 
+    // الاسم
     if (!contact.name.trim()) {
         nameError.textContent = "Name is required";
         if (showAlert) AddFailed("Missing Name", "Please enter a name!");
         valid = false;
     }
 
+    // رقم الموبايل
     if (!contact.phone.trim()) {
         phoneError.textContent = "Phone number is required";
         if (showAlert) AddFailed("Missing Phone", "Please enter a phone number!");
         valid = false;
-    } 
+    }
     else if (!phoneRegex.test(contact.phone.trim())) {
         phoneError.textContent = "Invalid Egyptian phone number";
         if (showAlert)
@@ -109,14 +111,30 @@ function validateContact(contact, showAlert = true) {
         valid = false;
     }
 
+    // الإيميل
     if (contact.email && !emailRegex.test(contact.email.trim())) {
         emailError.textContent = "Invalid email address";
-        if (showAlert) AddFailed("Invalid Email", "Please enter a valid email");
+     
         valid = false;
+    }
+
+    // 🔴 فحص تكرار رقم الموبايل (وقت الحفظ فقط)
+    if (showAlert) {
+        for (var i = 0; i < ContactList.length; i++) {
+            if (i !== index && ContactList[i].phone === contact.phone) {
+                AddFailed(
+                    "Number already exists",
+                    "This number is already added for: " + ContactList[i].name
+                );
+                valid = false;
+                break;
+            }
+        }
     }
 
     return valid;
 }
+
 
 
 
