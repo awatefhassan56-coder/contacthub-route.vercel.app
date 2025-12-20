@@ -66,7 +66,7 @@ function AddFailed(title, text) {
 
 
 
-function showSuccess(action, name = "") {
+function showSuccess(action, name= "") {
     Swal.fire({
         title: "Done!",
         text: name
@@ -445,7 +445,7 @@ function updateContact() {
 
     addCon.classList.remove("d-none");
     updateCon.classList.add("d-none");
-    showSuccess("updated", "content");
+    showSuccess("updated", contact.name);
 }
 
 /* ============================
